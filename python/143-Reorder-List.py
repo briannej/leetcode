@@ -2,6 +2,8 @@ class Solution:
     def reorderList(self, head: ListNode) -> None:
         # find middle
         slow, fast = head, head.next
+        #following will also work 
+        #slow = fast = head
         while fast and fast.next:
             slow = slow.next
             fast = fast.next.next
