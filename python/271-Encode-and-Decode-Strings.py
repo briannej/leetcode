@@ -1,28 +1,28 @@
-class Solution:
-    """
-    @param: strs: a list of strings
-    @return: encodes a list of strings to a single string.
-    """
+class Codec:
+    def encode(self, strs: List[str]) -> str:
+        """Encodes a list of strings to a single string.
+        """
+        encoded = ''
+        for string in strs:
+            encoded= encoded+ str(len(string)) + '#'+ string
+        #encoded = chr(258).join(strs)
+        return encoded
+            
+        
 
-    def encode(self, strs):
-        res = ""
-        for s in strs:
-            res += str(len(s)) + "#" + s
-        return res
-
-    """
-    @param: str: A string
-    @return: dcodes a single string to a list of strings
-    """
-
-    def decode(self, str):
-        res, i = [], 0
-
-        while i < len(str):
-            j = i
-            while str[j] != "#":
-                j += 1
-            length = int(str[i:j])
-            res.append(str[j + 1 : j + 1 + length])
-            i = j + 1 + length
-        return res
+    def decode(self, s: str) -> List[str]:
+        """Decodes a single string to a list of strings.
+        """
+        i = 0
+        last_start = 0
+        decoded=[]
+        while i < len(s):
+            if s[i] == '#':
+                length = int(s[last_start:i])
+                decoded.append(s[i+1:i+length+1])
+                last_start = i+length+1
+                i +=length+1
+            else:
+                i +=1
+        #decoded = s.split(sep= chr(258))
+        return decoded
