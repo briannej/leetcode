@@ -7,7 +7,7 @@ class Solution:
         return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))
 
 
-# ITERATIVE DFS
+# ITERATIVE PREORDER DFS
 class Solution:
     def maxDepth(self, root: TreeNode) -> int:
         stack = [[root, 1]]
