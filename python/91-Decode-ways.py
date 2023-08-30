@@ -5,13 +5,12 @@ class Solution:
 
         for i in range(len(s)):
             temp_sum=0
-            temp=second
             if int(s[i]) >0 and int(s[i])<=9:
                 temp_sum+=second
             if i>0 and int(s[i-1:i+1]) >=10 and int(s[i-1:i+1])<=26:
                 temp_sum+=first
+            first=second
             second=temp_sum
-            first=temp
         return second
 
 
