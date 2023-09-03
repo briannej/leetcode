@@ -22,22 +22,19 @@ class Solution:
                     dp[i][j] = dp[i - 1][j] or dp[i - 1][j - curr]
         return dp[n][subset_sum]
 
-
+from collections.abc import Set
 class Solution:
     def canPartition(self, nums: List[int]) -> bool:
-        if sum(nums) % 2:
+        total_sum=sum(nums)
+        if total_sum %2:
             return False
-
-        dp = set()
-        dp.add(0)
-        target = sum(nums) // 2
-
-        for i in range(len(nums) - 1, -1, -1):
-            nextDP = set()
-            for t in dp:
-                if (t + nums[i]) == target:
+        half=total_sum//2
+        sum_hashset=set()
+        sum_hashset.add(0)
+        for num in nums:
+            hashset_copy=sum_hashset.copy()
+            for elem in hashset_copy:
+                if num+elem ==half:
                     return True
-                nextDP.add(t + nums[i])
-                nextDP.add(t)
-            dp = nextDP
+                sum_hashset.add(num+elem)
         return False
