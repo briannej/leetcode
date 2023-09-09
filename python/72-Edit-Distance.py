@@ -1,3 +1,28 @@
+#also next solution is good. this one initializes row 0 and col 0 in the same loop. next one has separate loops
+class Solution:
+    def minDistance(self, word1: str, word2: str) -> int:
+        COLS=len(word1)
+        ROWS=len(word2)
+        
+        dp=[[0]*(COLS+1) for _ in range(ROWS+1)]
+        
+        for row in range(ROWS+1):
+            for col in range(COLS+1):
+                if row==0 and col==0:
+                    continue
+                if row==0:
+                    dp[row][col]=1+ dp[row][col-1]
+                elif col==0:
+                    dp[row][col]=1+ dp[row-1][col]    
+
+                else:
+                    if word1[col-1]== word2[row-1]:
+                        dp[row][col]=dp[row-1][col-1]
+                    else:
+                        dp[row][col]=1+ min(dp[row-1][col],dp[row][col-1],dp[row-1][col-1])
+        return dp[-1][-1]
+
+
 #bottom up 2D dp
 class Solution:
     def minDistance(self, word1: str, word2: str) -> int:
