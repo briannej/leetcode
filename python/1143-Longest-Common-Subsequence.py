@@ -1,20 +1,54 @@
+#bottom up 2D dynamic programming
 class Solution:
-    def longestCommonSubsequence(self, s1: str, s2: str) -> int:
-        m = len(s1)
-        n = len(s2)
-        memo = [[0 for _ in range(n + 1)] for _ in range(m + 1)]
-
-        for row in range(1, m + 1):
-            for col in range(1, n + 1):
-                if s1[row - 1] == s2[col - 1]:
-                    memo[row][col] = 1 + memo[row - 1][col - 1]
+    def longestCommonSubsequence(self, text1: str, text2: str) -> int:
+        ROWS=len(text1)
+        COLS=len(text2)
+        dp=[[0 for _ in range(COLS+1)] for _ in range(ROWS+1)]
+        for row in range(1, ROWS+1):
+            for col in range(1,COLS+1):
+                if text2[col-1]==text1[row-1]:
+                    dp[row][col]=1+dp[row-1][col-1]
                 else:
-                    memo[row][col] = max(memo[row][col - 1], memo[row - 1][col])
+                    dp[row][col]=max(dp[row-1][col],dp[row][col-1])
+        return dp[-1][-1]
 
-        return memo[m][n]
+#bottom up 1D dynamic programming- memory optimization with two rows
+class Solution:
+    def longestCommonSubsequence(self, text1: str, text2: str) -> int:
+        if len(text1) < len(text2):
+            text1,text2=text2,text1
+        ROWS=len(text1)
+        COLS=len(text2)
+        above=[0 for _ in range(COLS+1)]
+        for row in range(1,ROWS+1):
+            current=[0]* (COLS+1)
+            for col in range(1,COLS+1):
+                if text2[col-1]==text1[row-1]:
+                    current[col]=1+above[col-1]
+                else:
+                    current[col]=max(above[col],current[col-1])
+                
+            above=current
+        return current[-1]
 
+#bottom up 1D dynamic programming- memory optimization with two rows- minor time optimization
+class Solution:
+    def longestCommonSubsequence(self, text1: str, text2: str) -> int:
+        if len(text1) < len(text2):
+            text1,text2=text2,text1
+        ROWS=len(text1)
+        COLS=len(text2)
+        above=[0 for _ in range(COLS+1)]
+        current=[0]* (COLS+1)
+        for row in range(1,ROWS+1):
+            for col in range(1,COLS+1):
+                if text2[col-1]==text1[row-1]:
+                    current[col]=1+above[col-1]
+                else:
+                    current[col]=max(above[col],current[col-1])
 
-
+            current,above=above,current
+        return above[-1]
 
 
 class Solution:
