@@ -1,3 +1,19 @@
+#state machine & dp with 3 arrays
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        length=len(prices)
+        sold,reset,hold=[0]*(length+1),[0]*(length+1),[0]*(length+1)
+        reset[0]=0
+        hold[0]=sold[0]=float('-inf')
+        for i in range(1,length+1):
+            sold[i]=hold[i-1]+prices[i-1]
+            reset[i]=max(sold[i-1],reset[i-1])
+            hold[i]=max(hold[i-1],reset[i-1]-prices[i-1])
+        print(sold,reset,hold)
+        return max(sold[-1],reset[-1])
+
+
+
 #state machine & 1D dp
 class Solution(object):
     def maxProfit(self, prices):
