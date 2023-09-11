@@ -1,21 +1,27 @@
 #bottom up 2D dp 
 class Solution:
-    def isMatch(self, s, p):
-        dp = [[False] * (len(s) + 1) for _ in range(len(p) + 1)]
+    def isMatch(self, s: str, p: str) -> bool:
+        lenS, lenP = len(s), len(p)
+        dp = [[False]*(lenP+1) for i in range(lenS+1)]
         dp[0][0] = True
-        for i in range(2, len(p)):
-            dp[i][0] = dp[i - 2][0] and p[i-1] == '*'
-        for i in range(1, len(p)+1):
-            for j in range(1,len(s)+1):
-                if p[i-1] == '*':
-                    dp[i][j] = dp[i - 2][j] or dp[i-1][j]
-                    if p[i - 2] == s[j-1] or p[i - 2] == '.':
-                        dp[i][j] |= dp[i][j-1]
-                else:
-                    dp[i][j] = dp[i-1][j-1] and (p[i-1] == s[j-1] or p[i-1] == '.')
-        return dp[-1][-1] 
-
-
+    
+        for j in range(1, lenP+1):
+            if p[j-1] == '*':
+                dp[0][j] = dp[0][j-2]
+    
+        for i in range(1, lenS+1):
+            for j in range(1, lenP+1):
+                #if chars match look top left
+                if p[j-1] in {s[i-1], '.'}:
+                    dp[i][j] = dp[i-1][j-1]
+                #if we have a * char:
+                #1. not to use the previous char
+                #2. look one col up, if True, it was possible to make the previous chars in s with some number of *
+                #so check if it is possible to make the last char with * as well? (therefore the char before * should match the last s char)
+                elif p[j-1] == "*":
+                    dp[i][j] = dp[i][j-2] or (dp[i-1][j] and p[j-2] in {s[i-1], '.'})
+    
+        return dp[-1][-1]
 
 
 # BOTTOM-UP Dynamic Programming
