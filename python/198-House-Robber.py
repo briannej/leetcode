@@ -15,6 +15,24 @@ class Solution:
             return hashmap[n]
         return helper(len(nums)-1)
 
+#recursive with memo
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        hashmap={}
+        def helper(n):
+            if n not in hashmap:
+                if n==0:
+                    hashmap[0]=nums[0]
+                elif n==1:
+                    hashmap[1]=max(nums[0],nums[1])
+                else:
+                    hashmap[n]=max(helper(n-1), helper(n-2)+nums[n])
+
+            return hashmap[n]
+
+        return helper(len(nums)-1) 
+
+
 class Solution:
     def rob(self, nums: List[int]) -> int:
         # edge cases:
