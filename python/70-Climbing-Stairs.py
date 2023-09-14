@@ -7,7 +7,7 @@ class Solution:
     
 class Solution:
     def climbStairs(self, n: int) -> int:
-        hashmap={-1:0,0:1}
+        hashmap={0:1,1:1}
         def helper(n):
             if n not in hashmap:
                 hashmap[n]=helper(n-1)+helper(n-2)
